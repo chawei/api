@@ -13,7 +13,7 @@
     <tr>
       <th>Query</th>
       <th>Messed query</th>
-      <th>Query ip</th>
+      <th>Created at</th>
       <th></th>
     </tr>
 
@@ -21,7 +21,7 @@
     <tr>
       <td><%= search_log.query %></td>
       <td><%= search_log.messed_query %></td>
-      <td><%= search_log.query_ip %></td>
+      <td><%= search_log.created_at.to_s(:short) %></td>
       <td class="actions">
         <%= link_to 'View', search_log %> |
         <%= link_to 'Edit', edit_search_log_path(search_log) %> |
