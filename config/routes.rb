@@ -1,5 +1,9 @@
 Api::Application.routes.draw do
-  resources :search_logs
+  resources :search_logs do
+    collection do
+      get 'add'
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

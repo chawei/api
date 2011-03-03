@@ -39,10 +39,25 @@ class SearchLogsController < ApplicationController
     @search_log = SearchLog.find(params[:id])
   end
 
+  def add
+    @search_log = SearchLog.new(params[:search_log])
+
+    respond_to do |format|
+      if @search_log.save
+        format.html { redirect_to(@search_log, :notice => 'Search log was successfully created.') }
+        format.xml  { render :xml => @search_log, :status => :created, :location => @search_log }
+        format.json { render :json => 'ok' }
+      else
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @search_log.errors, :status => :unprocessable_entity }
+        format.json { render :json => 'fail' }
+      end
+    end
+  end
+  
   # POST /search_logs
   # POST /search_logs.xml
   def create
-    
     @search_log = SearchLog.new(params[:search_log])
 
     respond_to do |format|
