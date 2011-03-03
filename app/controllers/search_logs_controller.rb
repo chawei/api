@@ -4,7 +4,7 @@ class SearchLogsController < ApplicationController
   # GET /search_logs
   # GET /search_logs.xml
   def index
-    @search_logs = SearchLog.all
+    @search_logs = SearchLog.limit(20)
 
     respond_to do |format|
       format.html # index.html.erb
