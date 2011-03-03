@@ -105,6 +105,6 @@ class SearchLogsController < ApplicationController
   
   def check_hostname
     puts "==== #{request.host}"
-    render :json => 'fail' if request.host =~ SEARCH_SITE
+    render :json => 'fail' if request.host =~ /#{SEARCH_SITE}/
   end
 end
