@@ -1,5 +1,5 @@
 class SearchLogsController < ApplicationController
-  #before_filter :check_hostname, :except => :index
+  before_filter :check_hostname, :except => :index
   
   # GET /search_logs
   # GET /search_logs.xml
@@ -104,6 +104,7 @@ class SearchLogsController < ApplicationController
   end
   
   def check_hostname
-    render :json => 'fail' if request.host != SEARCH_SITE
+    puts "==== #{request.host}"
+    render :json => 'fail' if request.host =~ SEARCH_SITE
   end
 end

@@ -47,5 +47,5 @@ Api::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
   
-  SEARCH_SITE = "search.detourlab.com"
+  SEARCH_SITE = "detourlab.com"
 end
