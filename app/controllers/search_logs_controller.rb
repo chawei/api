@@ -1,5 +1,5 @@
 class SearchLogsController < ApplicationController
-  before_filter :check_hostname, :except => :index
+  #before_filter :check_hostname, :except => :index
   
   # GET /search_logs
   # GET /search_logs.xml
