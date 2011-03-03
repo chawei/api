@@ -40,7 +40,9 @@ class SearchLogsController < ApplicationController
   end
 
   def add
-    @search_log = SearchLog.new(params[:search_log])
+    @search_log = SearchLog.new
+    @search_log.query = params[:search_log][:query]
+    @search_log.messed_query = params[:search_log][:messed_query]
 
     respond_to do |format|
       if @search_log.save
