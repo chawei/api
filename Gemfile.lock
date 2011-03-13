@@ -33,7 +33,6 @@ GEM
     crack (0.1.8)
     erubis (2.6.6)
       abstract (>= 1.0.0)
-    feedbackmine-language_detector (0.1.2)
     httparty (0.6.1)
       crack (= 0.1.8)
     i18n (0.5.0)
@@ -73,7 +72,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  feedbackmine-language_detector
   httparty
   mysql2
   rails (= 3.0.5)

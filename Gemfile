@@ -7,7 +7,6 @@ gem 'rails', '3.0.5'
 
 gem 'mysql2'
 gem 'httparty'
-gem 'feedbackmine-language_detector'
 
 # Use unicorn as the web server
 # gem 'unicorn'
