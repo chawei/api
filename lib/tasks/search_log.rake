@@ -1,27 +1,28 @@
 namespace :search_log do
   desc "update search_log language"
-  task :update_lang => :environment do
-    counter = 0
-    #detector = LanguageDetector.new
-    
-    SearchLog.find_in_batches do |slogs|
+  task :update_lang => :environment do    
+    SearchLog.where(:lang => nil).find_in_batches do |slogs|
       slogs.each do |slog|
-        if slog.lang.nil?
-          if ['google', 'facebook', 'test', 'hello' , 'sex', 'porn', 'google sloppy', 'apple'].include? slog.query
-            slog.lang = 'en'
-          else
-            slog.lang = GLanguageDetector.detect(slog.query)
-          end
-          slog.save
-          puts "== ID: #{slog.id}, Query: #{slog.query}, Lang: #{slog.lang}"
-          #counter += 1
-          #if counter > 10
-          #  puts "Sleep"
-          #  sleep(1)
-          #  counter = 0
-          #end
+        if ['google', 'facebook', 'test', 'hello' , 'sex', 'porn', 'google sloppy', 'apple'].include? slog.query
+          slog.lang = 'en'
         else
-          puts "skipped"
+          slog.lang = GLanguageDetector.detect(slog.query)
+        end
+        slog.save
+        puts "== ID: #{slog.id}, Query: #{slog.query}, Lang: #{slog.lang}"
+      end
+    end
+  end
+  
+  desc "propagate search_log lang"
+  task :propagate_lang => :environment do
+    SearchLog.where("lang IS NOT NULL").find_in_batches do |slogs|
+      slogs.each do |slog|
+        matched_logs = SearchLog.where(:lang => nil, :query => slog.query)
+        matched_logs.each do |mlog|
+          mlog.lang = slog.lang
+          mlog.save
+          puts "== ID: #{mlog.id}, Query: #{mlog.query}, Lang: #{mlog.lang}"
         end
       end
     end
