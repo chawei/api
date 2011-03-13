@@ -2,7 +2,7 @@ namespace :search_log do
   desc "update search_log language"
   task :update_lang => :environment do
     counter = 0
-    detector = LanguageDetector.new
+    #detector = LanguageDetector.new
     
     SearchLog.find_in_batches do |slogs|
       slogs.each do |slog|
