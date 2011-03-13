@@ -8,7 +8,6 @@
 
   <div class='index_header'>
     <span class='title'>List of search_logs</span>
-    (<%= link_to 'add a new search log', new_search_log_path %>)
   </div>
 
   <table class="index">
@@ -25,9 +24,7 @@
       <td><%= search_log.messed_query %></td>
       <td><%= search_log.created_at.to_s(:short) %></td>
       <td class="actions">
-        <%= link_to 'View', search_log %> |
-        <%= link_to 'Edit', edit_search_log_path(search_log) %> |
-        <%= link_to 'Delete', search_log, :confirm => 'Are you sure?', :method => :delete %>
+        <%= link_to 'View', search_log %>
       </td>
     </tr>
   <% end %>

@@ -1,7 +1,12 @@
 Api::Application.routes.draw do
+  resources :hot_searches
+
   resources :search_logs do
     collection do
       get 'add'
+      get 'trends'
+      get 'trend_query'
+      get 'trend_lang'
     end
   end
 

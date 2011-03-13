@@ -1,0 +1,1 @@
+API_KEYS = YAML.load(File.read("config/api_keys.yml"))

@@ -1,10 +1,55 @@
 class SearchLogsController < ApplicationController
   #before_filter :check_hostname, :except => :index
   
+  def trends
+    
+  end
+  
+  def trend_query
+    unless request.format.html?
+      date  = params[:date] || Date.today
+      date = date.to_date
+      query = params[:query]
+      
+      @hot_searches = HotSearch.hot_queries_on(date)
+      @hot_languages = SearchLog.find_hot_languages_on(date)
+      @result = { :query_details => { :related_searches => SearchLog.related_searches(query), 
+                                      :total_searches => SearchLog.total_searches(query),
+                                      :weekly_query_data => SearchLog.weekly_query_data(query, date) }, 
+                  :hot_searches => @hot_searches,
+                  :hot_languages => @hot_languages }
+      respond_to do |format|
+        format.xml   { render :xml  => @result }
+        format.json  { render :json => @result }
+      end
+    end
+  end
+  
+  def trend_lang
+    unless request.format.html?
+      date  = params[:date] || Date.today
+      date = date.to_date
+      lang = params[:lang]
+      
+      @hot_searches = HotSearch.hot_queries_on(date)
+      @hot_languages = SearchLog.find_hot_languages_on(date)
+      @result = { :query_details => { :related_searches => SearchLog.related_searches_on_lang(lang), 
+                                      :total_searches => SearchLog.total_searches_on_lang(lang),
+                                      :weekly_query_data => SearchLog.weekly_lang_data(lang, date) }, 
+                  :hot_searches => @hot_searches,
+                  :hot_languages => @hot_languages }
+      respond_to do |format|
+        format.xml   { render :xml  => @result }
+        format.json  { render :json => @result }
+      end
+    end
+  end
+  
+  
   # GET /search_logs
   # GET /search_logs.xml
   def index
-    @search_logs = SearchLog.limit(50)
+    @search_logs = SearchLog.order('created_at DESC').limit(50)
 
     respond_to do |format|
       format.html # index.html.erb
