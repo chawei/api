@@ -35,7 +35,11 @@ class GLanguageDetector
     begin
       url = "https://www.googleapis.com/language/translate/v2?key=#{api_key}&target=en&q=#{URI.escape(text)}"
       response = self.get(url)
-      return response['data']['translations'][0]['detectedSourceLanguage']
+      if response['error'].nil?
+        return response['data']['translations'][0]['detectedSourceLanguage']
+      else
+        puts "Error code: #{response['error']['code']}"
+      end
       
       #base_url = 'http://www.google.com/uds/GlangDetect?v=1.0&q='
       #url = base_url + CGI.escape(text)
