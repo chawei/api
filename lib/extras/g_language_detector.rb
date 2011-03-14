@@ -39,7 +39,7 @@ class GLanguageDetector
         return response['data']['translations'][0]['detectedSourceLanguage']
       else
         puts "Error code: #{response['error']['code']}"
-        if response['error']['code'] == '503'
+        if response['error']['code'] == 503
           return 'en'
         end
       end
