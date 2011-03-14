@@ -31,7 +31,7 @@ class GLanguageDetector
     retried_counter = 0
     max_retried_time = 3
     
-    api_key = API_KEYS[(rand()*10).round() % 2]
+    api_key = API_KEYS[(rand()*10).round() % API_KEYS.length]
     begin
       url = "https://www.googleapis.com/language/translate/v2?key=#{api_key}&target=en&q=#{URI.escape(text)}"
       response = self.get(url)
@@ -39,6 +39,9 @@ class GLanguageDetector
         return response['data']['translations'][0]['detectedSourceLanguage']
       else
         puts "Error code: #{response['error']['code']}"
+        if response['error']['code'] == '503'
+          return 'en'
+        end
       end
       
       #base_url = 'http://www.google.com/uds/GlangDetect?v=1.0&q='

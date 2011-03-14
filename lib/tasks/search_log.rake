@@ -3,8 +3,8 @@ namespace :search_log do
   task :update_lang => :environment do    
     SearchLog.where(:lang => nil).find_in_batches do |slogs|
       slogs.each do |slog|
-        if ['google', 'facebook', 'test', 'hello' , 'sex', 'porn', 'google sloppy', 'apple'].include? slog.query
-          slog.lang = 'en'
+        if same_log = SearchLog.where("lang IS NOT NULL AND query = ?", slog.query).first
+          slog.lang = same_log.lang
         else
           slog.lang = GLanguageDetector.detect(slog.query)
         end
