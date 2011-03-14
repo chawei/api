@@ -9,9 +9,7 @@ cy: Welsh
 mg: Malagasy
 sd: Sindhi
 or: Oriya
-xx-elmer: Elmer Fudd
 lt: Lithuanian
-xx-pirate: Pirate
 fy: Frisian
 gl: Galician
 mi: Maori
@@ -81,7 +79,6 @@ ko: Korean
 et: Estonian
 nn: Norwegian (Nynorsk)
 sw: Swahili
-xx-hacker: Hacker
 tk: Turkmen
 hr: Croatian
 "no": Norwegian
@@ -93,9 +90,9 @@ hu: Hungarian
 to: Tonga
 da: Danish
 ku: Kurdish
+zh-TW: Chinese (Traditional)
 zh-CN: Chinese (Simplified)
 ga: Irish
-xx-bork: Bork, bork, bork!
 co: Corsican
 tr: Turkish
 hy: Armenian
@@ -109,17 +106,19 @@ qu: Quechua
 ky: Kyrgyz
 gd: Scots Gaelic
 cs: Czech
-xx-klingon: Klingon
 tt: Tatar
 ln: Lingala
 fr: French
 om: Oromo
 xh: Xhosa
-pt-PT: Portuguese (Portugal)
+pt: Portuguese
 pa: Punjabi
 lo: Laothian
 uk: Ukrainian
 rm: Romansh
 tw: Twi
-zh-TW: Chinese (Traditional)
-pt-BR: Portuguese (Brazil)
+xx-klingon: Klingon
+xx-bork: Bork, bork, bork!
+xx-hacker: Hacker
+xx-elmer: Elmer Fudd
+xx-pirate: Pirate

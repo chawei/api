@@ -1,14 +1,15 @@
 class SearchLog < ActiveRecord::Base
   def self.find_messed_queries(q)
-    select("DISTINCT(messed_query)").where(:query => q).map { |s| s.messed_query }
+    original_query = where(:messed_query => q).first.query
+    select("DISTINCT(messed_query)").where(:query => original_query).map { |s| s.messed_query }
   end
   
   def self.find_hot_searches_on(date=Date.today)
-    select("count(*) as cnt, messed_query").group(:query).order('cnt DESC').limit(10).where(:created_at => (date)..(date+1.day)).map { |s| [s.cnt, s.messed_query] }
+    select("count(*) as cnt, messed_query").group(:query).order('cnt DESC').limit(10).where(:created_at => (date)..(date + 1.day)).map { |s| [s.cnt, s.messed_query] }
   end
   
   def self.find_hot_languages_on(date=Date.today)
-    select("count(*) as cnt, lang").group(:lang).order('cnt DESC').limit(10).where(:created_at => (date)..(date+1.day)).map { |s| [s.cnt, s.lang, LANGUAGE_MAPPING[s.lang]] }
+    select("count(*) as cnt, lang").group(:lang).order('cnt DESC').limit(10).where("lang IS NOT NULL").where(:created_at => (date)..(date+1.day)).map { |s| [s.cnt, s.lang, LANGUAGE_MAPPING[s.lang]] }
   end
   
   def self.find_overall_hot_searches
@@ -22,7 +23,7 @@ class SearchLog < ActiveRecord::Base
   end
   
   def self.related_searches_on_lang(lang, date=Date.today)
-    select("count(*) as cnt, messed_query").group(:query).order('cnt DESC').limit(10).where(:lang => lang, :created_at => (date-6.days)..(date+2.days)).map { |s| s.messed_query }
+    select("count(*) as cnt, messed_query").group(:query).order('cnt DESC').limit(10).where(:lang => lang, :created_at => (date - 6.days)..(date + 2.days)).map { |s| s.messed_query }
   end
   
   def self.messed_query_count(q)

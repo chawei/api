@@ -2,10 +2,24 @@ class SearchLogsController < ApplicationController
   #before_filter :check_hostname, :except => :index
   
   def trends
-    
+    unless request.format.html?
+      date  = params[:date] || Date.today
+      date = date.to_date
+      
+      @hot_searches = HotSearch.hot_queries_on(date)
+      @hot_languages = SearchLog.find_hot_languages_on(date)
+      @result = { :hot_searches => @hot_searches,
+                  :hot_languages => @hot_languages }
+      respond_to do |format|
+        format.xml   { render :xml  => @result }
+        format.json  { render :json => @result }
+      end
+    end
   end
   
   def trend_query
+    render :text => 'no valid input' and return if params[:query].blank?
+    
     unless request.format.html?
       date  = params[:date] || Date.today
       date = date.to_date
@@ -26,16 +40,18 @@ class SearchLogsController < ApplicationController
   end
   
   def trend_lang
+    render :text => 'no valid input' and return if params[:query].blank?
+    
     unless request.format.html?
       date  = params[:date] || Date.today
       date = date.to_date
-      lang = params[:lang]
+      query = params[:query]
       
       @hot_searches = HotSearch.hot_queries_on(date)
       @hot_languages = SearchLog.find_hot_languages_on(date)
-      @result = { :query_details => { :related_searches => SearchLog.related_searches_on_lang(lang), 
-                                      :total_searches => SearchLog.total_searches_on_lang(lang),
-                                      :weekly_query_data => SearchLog.weekly_lang_data(lang, date) }, 
+      @result = { :query_details => { :related_searches => SearchLog.related_searches_on_lang(query), 
+                                      :total_searches => SearchLog.total_searches_on_lang(query),
+                                      :weekly_query_data => SearchLog.weekly_lang_data(query, date) }, 
                   :hot_searches => @hot_searches,
                   :hot_languages => @hot_languages }
       respond_to do |format|
