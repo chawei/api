@@ -6,8 +6,8 @@ class SearchLogsController < ApplicationController
       date  = params[:date] || Date.today
       date = date.to_date
       
-      @hot_searches = HotSearch.hot_queries_on(date)
-      @hot_languages = SearchLog.find_hot_languages_on(date)
+      @hot_searches  = SearchLog.overall_hot_searches_cache #HotSearch.hot_queries_on(date)
+      @hot_languages = SearchLog.overall_hot_languages_cache #SearchLog.find_hot_languages_on(date)
       @result = { :hot_searches => @hot_searches,
                   :hot_languages => @hot_languages }
       respond_to do |format|
@@ -25,8 +25,8 @@ class SearchLogsController < ApplicationController
       date = date.to_date
       query = params[:query]
       
-      @hot_searches = HotSearch.hot_queries_on(date)
-      @hot_languages = SearchLog.find_hot_languages_on(date)
+      @hot_searches  = SearchLog.overall_hot_searches_cache
+      @hot_languages = SearchLog.overall_hot_languages_cache
       @result = { :query_details => { :related_searches => SearchLog.related_searches(query), 
                                       :total_searches => SearchLog.total_searches(query),
                                       :weekly_query_data => SearchLog.weekly_query_data(query, date) }, 
@@ -47,8 +47,8 @@ class SearchLogsController < ApplicationController
       date = date.to_date
       query = params[:query]
       
-      @hot_searches = HotSearch.hot_queries_on(date)
-      @hot_languages = SearchLog.find_hot_languages_on(date)
+      @hot_searches  = SearchLog.overall_hot_searches_cache
+      @hot_languages = SearchLog.overall_hot_languages_cache
       @result = { :query_details => { :related_searches => SearchLog.related_searches_on_lang(query), 
                                       :total_searches => SearchLog.total_searches_on_lang(query),
                                       :weekly_query_data => SearchLog.weekly_lang_data(query, date) }, 

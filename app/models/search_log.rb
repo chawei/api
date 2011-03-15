@@ -16,6 +16,18 @@ class SearchLog < ActiveRecord::Base
     select("count(*) as cnt, messed_query").group(:query).order('cnt DESC').limit(10).map { |s| [s.cnt, s.messed_query] }
   end
   
+  def self.find_overall_hot_languages
+    select("count(*) as cnt, lang").group(:lang).order('cnt DESC').limit(10).where("lang IS NOT NULL").map { |s| [s.cnt, s.lang, LANGUAGE_MAPPING[s.lang]] }
+  end
+  
+  def self.overall_hot_languages_cache
+    Rails.cache.fetch("SearchLog.find_overall_hot_languages") { find_overall_hot_languages }
+  end
+  
+  def self.overall_hot_searches_cache
+    Rails.cache.fetch("SearchLog.find_overall_hot_searches") { find_overall_hot_searches }
+  end
+  
   def self.related_searches(q)
     searches = find_messed_queries(q)
     searches.delete(q)
