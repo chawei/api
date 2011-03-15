@@ -9,7 +9,8 @@ class SearchLogsController < ApplicationController
       @hot_searches  = SearchLog.overall_hot_searches_cache #HotSearch.hot_queries_on(date)
       @hot_languages = SearchLog.overall_hot_languages_cache #SearchLog.find_hot_languages_on(date)
       @result = { :hot_searches => @hot_searches,
-                  :hot_languages => @hot_languages }
+                  :hot_languages => @hot_languages,
+                  :total_count => SearchLog.count }
       respond_to do |format|
         format.xml   { render :xml  => @result }
         format.json  { render :json => @result }
