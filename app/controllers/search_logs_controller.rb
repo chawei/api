@@ -12,8 +12,7 @@ class SearchLogsController < ApplicationController
                   :hot_languages => @hot_languages,
                   :total_count => SearchLog.count }
       respond_to do |format|
-        format.xml   { render :xml  => @result }
-        format.json  { render :json => @result }
+        format.json  { render :json => @result, :callback => params[:callback] }
       end
     end
   end
@@ -34,8 +33,7 @@ class SearchLogsController < ApplicationController
                   :hot_searches => @hot_searches,
                   :hot_languages => @hot_languages }
       respond_to do |format|
-        format.xml   { render :xml  => @result }
-        format.json  { render :json => @result }
+        format.json  { render :json => @result, :callback => params[:callback] }
       end
     end
   end
@@ -56,8 +54,7 @@ class SearchLogsController < ApplicationController
                   :hot_searches => @hot_searches,
                   :hot_languages => @hot_languages }
       respond_to do |format|
-        format.xml   { render :xml  => @result }
-        format.json  { render :json => @result }
+        format.json  { render :json => @result, :callback => params[:callback] }
       end
     end
   end
