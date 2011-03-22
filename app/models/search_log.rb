@@ -1,4 +1,6 @@
 class SearchLog < ActiveRecord::Base
+  before_create :set_lang
+  
   def self.find_messed_queries(q)
     original_query = where(:messed_query => q).first.query
     select("DISTINCT(messed_query)").where(:query => original_query).map { |s| s.messed_query }
@@ -69,4 +71,10 @@ class SearchLog < ActiveRecord::Base
   def self.weekly_lang_data(lang, date=Date.today)
     select("count(*) as cnt, lang, created_at").group("date(created_at)").order('created_at').where(:lang => lang, :created_at => (date-6.days)..(date+2.days)).map { |s| s.cnt }
   end
+  
+  private
+  
+    def set_lang
+      self.lang = GLanguageDetector.detect(self.query)
+    end
 end
