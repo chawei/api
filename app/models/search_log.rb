@@ -108,8 +108,8 @@ class SearchLog < ActiveRecord::Base
     
     hot_searches  = SearchLog.overall_hot_searches_cache
     hot_languages = SearchLog.overall_hot_languages_cache
-    @result = { :query_details => { :related_searches => SearchLog.related_searches_on_lang(query), 
-                                    :total_searches => SearchLog.total_searches_on_lang(query),
+    @result = { :query_details => { :related_searches => SearchLog.related_searches(query), 
+                                    :total_searches => SearchLog.total_searches(query),
                                     :weekly_query_data => SearchLog.query_data(query) }, 
                 :hot_searches => hot_searches,
                 :hot_languages => hot_languages }
