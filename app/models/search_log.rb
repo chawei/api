@@ -3,32 +3,44 @@ class SearchLog < ActiveRecord::Base
   
   before_create :set_lang
   
+  scope :created_at_this_date, lambda { |d| where(:created_at => (d)..(d+1.day)) }
+  
   def self.find_messed_queries(q)
     original_query = where(:messed_query => q).first.query
     select("DISTINCT(messed_query)").where(:query => original_query).map { |s| s.messed_query }
   end
   
+  def self.hot_searches_on
+    select("count(*) as cnt, messed_query").
+    group(:query).
+    order('cnt DESC').
+    limit(10)
+  end
+  
+  def self.hot_languages_on
+    select("count(*) as cnt, lang").
+    group(:lang).
+    where("lang IS NOT NULL").
+    order('cnt DESC').
+    limit(10)
+  end
+  
   def self.find_hot_searches_on(date=Date.today)
-    select("count(*) as cnt, messed_query").group(:query).
-    order('cnt DESC').limit(10).
-    where(:created_at => (date)..(date + 1.day)).map { |s| [s.cnt, s.messed_query] }
+    hot_searches_on.
+    created_at_this_date(date).map { |s| [s.cnt, s.messed_query] }
   end
   
   def self.find_hot_languages_on(date=Date.today)
-    select("count(*) as cnt, lang").group(:lang).
-    order('cnt DESC').limit(10).
-    where("lang IS NOT NULL").
-    where(:created_at => (date)..(date+1.day)).map { |s| [s.cnt, s.lang, LANGUAGE_MAPPING[s.lang]] }
+    hot_languages_on.
+    created_at_this_date(date).map { |s| [s.cnt, s.lang, LANGUAGE_MAPPING[s.lang]] }
   end
   
   def self.find_overall_hot_searches
-    select("count(*) as cnt, messed_query").
-    group(:query).order('cnt DESC').limit(10).map { |s| [s.cnt, s.messed_query] }
+    hot_searches_on.map { |s| [s.cnt, s.messed_query] }
   end
   
   def self.find_overall_hot_languages
-    select("count(*) as cnt, lang").group(:lang).
-    order('cnt DESC').limit(10).where("lang IS NOT NULL").map { |s| [s.cnt, s.lang, LANGUAGE_MAPPING[s.lang]] }
+    hot_languages_on.map { |s| [s.cnt, s.lang, LANGUAGE_MAPPING[s.lang]] }
   end
   
   def self.overall_hot_languages_cache
@@ -46,21 +58,16 @@ class SearchLog < ActiveRecord::Base
   end
   
   def self.related_searches_on_lang(lang, date=Date.today)
-    select("count(*) as cnt, messed_query").group(:query).
-    order('cnt DESC').limit(10).
+    hot_searches_on.
     where(:lang => lang, :created_at => (date - 6.days)..(date + 2.days)).map { |s| s.messed_query }
   end
   
-  def self.messed_query_count(q)
-    where(:messed_query => q).count
-  end
-  
-  def self.query_count(q)
-    where(:query => q).count
-  end
-  
-  def self.lang_count(lang)
-    where(:lang => lang).count
+  ["messed_query", "query", "lang"].each do |attr|
+    instance_eval <<-EOS
+      def #{attr}_count(query)
+        where(:#{attr} => query).count
+      end
+    EOS
   end
   
   def self.total_searches(q)
