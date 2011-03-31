@@ -84,6 +84,10 @@ class SearchLog < ActiveRecord::Base
     where(:messed_query => q, :created_at => (date-6.days)..(date+2.days)).map { |s| s.cnt }
   end
   
+  def self.query_data_cache(query)
+    Rails.cache.fetch("SearchLog.query_data(#{query})", :expires_in => 1.day) { query_data(query) }
+  end
+  
   def self.query_data(q, start_date=APP_LAUNCH_DATE, end_date=Date.today)
     select("count(*) as cnt, messed_query, created_at").
     group("date(created_at)").order('created_at').
@@ -96,10 +100,34 @@ class SearchLog < ActiveRecord::Base
     where(:lang => lang, :created_at => (date-6.days)..(date+2.days)).map { |s| s.cnt }
   end
   
+  def self.lang_data_cache(query)
+    Rails.cache.fetch("SearchLog.lang_data(#{query})", :expires_in => 1.day) { lang_data(query) }
+  end
+  
   def self.lang_data(lang, start_date=APP_LAUNCH_DATE, end_date=Date.today)
     select("count(*) as cnt, lang, created_at").
     group("date(created_at)").order('created_at').
     where(:lang => lang, :created_at => (start_date)..(end_date)).map { |s| s.cnt }
+  end
+  
+  def self.trends_cache
+    Rails.cache.fetch("SearchLog.trends", :expires_in => 1.day) { trends }
+  end
+  
+  def self.trends
+    hot_searches  = SearchLog.overall_hot_searches_cache
+    hot_languages = SearchLog.overall_hot_languages_cache
+    @result = { :hot_searches => hot_searches,
+                :hot_languages => hot_languages,
+                :total_count => SearchLog.count }
+  end
+  
+  def self.trend_query_cache(query, date)
+    Rails.cache.fetch("SearchLog.trend_query(#{query})", :expires_in => 1.day) { trend_query(query, date) }
+  end
+  
+  def self.trend_lang_cache(query, date)
+    Rails.cache.fetch("SearchLog.trend_lang(#{query})", :expires_in => 1.day) { trend_lang(query, date) }
   end
   
   def self.trend_query(query, date)

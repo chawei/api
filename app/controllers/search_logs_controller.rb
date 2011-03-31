@@ -2,15 +2,8 @@ class SearchLogsController < ApplicationController
   #before_filter :check_hostname, :except => :index
   
   def trends
-    unless request.format.html?
-      date  = params[:date] || Date.today
-      date = date.to_date
-      
-      @hot_searches  = SearchLog.overall_hot_searches_cache #HotSearch.hot_queries_on(date)
-      @hot_languages = SearchLog.overall_hot_languages_cache #SearchLog.find_hot_languages_on(date)
-      @result = { :hot_searches => @hot_searches,
-                  :hot_languages => @hot_languages,
-                  :total_count => SearchLog.count }
+    unless request.format.html?      
+      @result  = SearchLog.trends_cache
       respond_to do |format|
         format.json  { render :json => @result, :callback => params[:callback] }
       end
@@ -21,7 +14,7 @@ class SearchLogsController < ApplicationController
     render :text => 'no valid input' and return if params[:query].blank?
     
     unless request.format.html?
-      @result = SearchLog.trend_query(params[:query], params[:date])
+      @result = SearchLog.trend_query_cache(params[:query], params[:date])
       respond_to do |format|
         format.json  { render :json => @result, :callback => params[:callback] }
       end
@@ -32,7 +25,7 @@ class SearchLogsController < ApplicationController
     render :text => 'no valid input' and return if params[:query].blank?
     
     unless request.format.html?
-      @result = SearchLog.trend_lang(params[:query], params[:date])
+      @result = SearchLog.trend_lang_cache(params[:query], params[:date])
       respond_to do |format|
         format.json  { render :json => @result, :callback => params[:callback] }
       end
