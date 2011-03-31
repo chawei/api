@@ -21,17 +21,7 @@ class SearchLogsController < ApplicationController
     render :text => 'no valid input' and return if params[:query].blank?
     
     unless request.format.html?
-      date  = params[:date] || Date.today
-      date = date.to_date
-      query = params[:query]
-      
-      @hot_searches  = SearchLog.overall_hot_searches_cache
-      @hot_languages = SearchLog.overall_hot_languages_cache
-      @result = { :query_details => { :related_searches => SearchLog.related_searches(query), 
-                                      :total_searches => SearchLog.total_searches(query),
-                                      :weekly_query_data => SearchLog.weekly_query_data(query, date) }, 
-                  :hot_searches => @hot_searches,
-                  :hot_languages => @hot_languages }
+      @result = SearchLog.trend_query(params[:query], params[:date])
       respond_to do |format|
         format.json  { render :json => @result, :callback => params[:callback] }
       end
@@ -42,17 +32,7 @@ class SearchLogsController < ApplicationController
     render :text => 'no valid input' and return if params[:query].blank?
     
     unless request.format.html?
-      date  = params[:date] || Date.today
-      date = date.to_date
-      query = params[:query]
-      
-      @hot_searches  = SearchLog.overall_hot_searches_cache
-      @hot_languages = SearchLog.overall_hot_languages_cache
-      @result = { :query_details => { :related_searches => SearchLog.related_searches_on_lang(query), 
-                                      :total_searches => SearchLog.total_searches_on_lang(query),
-                                      :weekly_query_data => SearchLog.weekly_lang_data(query, date) }, 
-                  :hot_searches => @hot_searches,
-                  :hot_languages => @hot_languages }
+      @result = SearchLog.trend_lang(params[:query], params[:date])
       respond_to do |format|
         format.json  { render :json => @result, :callback => params[:callback] }
       end
