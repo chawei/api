@@ -91,30 +91,52 @@ class SearchLog < ActiveRecord::Base
     where(:messed_query => q, :created_at => (date-6.days)..(date+2.days)).map { |s| s.cnt }
   end
   
-  def self.query_data_cache(query)
-    Rails.cache.fetch("SearchLog.query_data(#{query})", :expires_in => 1.day) { query_data(query) }
-  end
-  
-  def self.query_data(q, start_date=APP_LAUNCH_DATE, end_date=Date.today)
-    select("count(*) as cnt, messed_query, created_at").
-    group("date(created_at)").order('created_at').
-    where(:messed_query => q, :created_at => (start_date)..(end_date)).map { |s| s.cnt }
-  end
-  
   def self.weekly_lang_data(lang, date=Date.today)
     select("count(*) as cnt, lang, created_at").
     group("date(created_at)").order('created_at').
     where(:lang => lang, :created_at => (date-6.days)..(date+2.days)).map { |s| s.cnt }
   end
   
+  def self.query_data_cache(query)
+    Rails.cache.fetch("SearchLog.query_data_count(#{query})", :expires_in => 1.day) { data_count(query, 'query') }
+  end
+  
   def self.lang_data_cache(query)
-    Rails.cache.fetch("SearchLog.lang_data(#{query})", :expires_in => 1.day) { lang_data(query) }
+    Rails.cache.fetch("SearchLog.lang_data_count(#{query})", :expires_in => 1.day) { data_count(query, 'lang') }
+  end
+  
+  def self.query_data(q, start_date=APP_LAUNCH_DATE, end_date=Date.today)
+    select("count(id) as cnt, messed_query, created_at, date(created_at) as date").
+    group("date").order('created_at').
+    where(:messed_query => q, :created_at => (start_date)..(end_date))
   end
   
   def self.lang_data(lang, start_date=APP_LAUNCH_DATE, end_date=Date.today)
-    select("count(*) as cnt, lang, created_at").
-    group("date(created_at)").order('created_at').
-    where(:lang => lang, :created_at => (start_date)..(end_date)).map { |s| s.cnt }
+    select("count(id) as cnt, lang, created_at, date(created_at) as date").
+    group("date").order('created_at').
+    where(:lang => lang, :created_at => (start_date)..(end_date))
+  end
+  
+  def self.data_count(q, meth, start_date=APP_LAUNCH_DATE, end_date=Date.today)
+    results = send("#{meth}_data".to_sym, q, start_date, end_date)
+    return every_date_count(results, start_date, end_date)
+  end
+  
+  def self.every_date_count(results, start_date=APP_LAUNCH_DATE, end_date=Date.today)
+    result_hash = {}
+    results.map { |r| result_hash[r.date] = r.cnt }
+    
+    output = []
+    target_date = start_date
+    begin
+      if date_count = result_hash[target_date]
+        output << date_count
+      else
+        output << 0
+      end
+      target_date += 1.day
+    end while target_date <= end_date
+    return output
   end
   
   def self.trends_cache
@@ -145,7 +167,7 @@ class SearchLog < ActiveRecord::Base
     hot_languages = SearchLog.overall_hot_languages_cache
     @result = { :query_details => { :related_searches => SearchLog.related_searches(query), 
                                     :total_searches => SearchLog.total_searches(query),
-                                    :weekly_query_data => SearchLog.query_data(query) }, 
+                                    :weekly_query_data => SearchLog.data_count(query, 'query') }, 
                 :hot_searches => hot_searches,
                 :hot_languages => hot_languages }
   end
@@ -158,7 +180,7 @@ class SearchLog < ActiveRecord::Base
     hot_languages = SearchLog.overall_hot_languages_cache
     @result = { :query_details => { :related_searches => SearchLog.related_searches_on_lang(query), 
                                     :total_searches => SearchLog.total_searches_on_lang(query),
-                                    :weekly_query_data => SearchLog.lang_data(query) }, 
+                                    :weekly_query_data => SearchLog.data_count(query, 'lang') }, 
                 :hot_searches => hot_searches,
                 :hot_languages => hot_languages }
   end
