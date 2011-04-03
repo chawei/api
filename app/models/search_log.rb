@@ -129,7 +129,7 @@ class SearchLog < ActiveRecord::Base
     output = []
     target_date = start_date
     begin
-      if date_count = result_hash[target_date]
+      if date_count = result_hash[target_date.to_s]
         output << date_count
       else
         output << 0
