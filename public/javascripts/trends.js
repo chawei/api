@@ -11,7 +11,7 @@ $(document).ready(function() {
 	var METHOD_URL = '';
 	var method = jQuery.url.param('method') || 'search'
 	
-	var query = jQuery.url.param('query') || '';
+	var query = jQuery.url.param('query') || 'google';
 	var date = jQuery.url.param('date') || new Date();
 	var graph_data = [];
 	

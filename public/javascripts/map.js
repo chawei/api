@@ -1,15 +1,5 @@
 var points = [
 {
-  "id": "taipei",
-  "properties": {
-    "html": "<div class='marker_count'>1009</div><div class='marker_city'>Taipei</div>"
-  },
-  "geometry": {
-    "coordinates": [121.319365, 25.20073],
-    "type": "Point"
-  }
-},
-{
   "id": "la",
   "properties": {
     "html": "<div class='marker_count'>129</div><div class='marker_city'>Los Angeles</div>"
