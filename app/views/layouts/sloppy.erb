@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>API</title>
-  <%= stylesheet_link_tag :all %>
+  <title>The Search Operators</title>
+  <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css' />
+  <%= stylesheet_link_tag 'sloppy' %>
   <%= csrf_meta_tag %>
 </head>
 <body>
   <%= yield %>
 
   <script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-  <%= javascript_include_tag 'rails', 'application' %>
+  <%= javascript_include_tag 'rails', 'sloppy' %>
   <%= yield :foot %>
 </body>
 </html>

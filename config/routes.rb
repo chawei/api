@@ -9,6 +9,10 @@ Api::Application.routes.draw do
       get 'trend_lang'
     end
   end
+  
+  match '/exhibition' => 'exhibition#index'
+  match '/map' => 'exhibition#map'
+  match '/sloppy/:action' => 'sloppy'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

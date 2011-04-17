@@ -24,5 +24,7 @@ Api::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
   
   SEARCH_SITE = "localhost"
+  
+  CDN_URL = "https://github.com/detour/js/raw/master"
 end
 
