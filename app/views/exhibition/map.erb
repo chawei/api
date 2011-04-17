@@ -1,3 +1,40 @@
+<% content_for :head do %>
+<style type="text/css" media="screen">
+  .layer path {
+    fill: lightsteelblue;
+    fill-opacity: .5;
+    stroke: steelblue;
+  }
+
+  .layer circle {
+    fill: lightcoral;
+    fill-opacity: .0;
+    /*stroke: brown;*/
+  }
+  
+  .marker {
+    font-family: 'Simple';
+    position: absolute; 
+    display: none;
+    text-align: center;
+    width: 100px;
+  }
+  .marker_count {
+    border: 1px solid #ff3a03;
+    color: #ff3a03;
+    background-color: #68ffc0;
+    padding: 5px 10px;
+    margin: 0 auto 10px;
+    text-align: center;
+    display: inline-block;
+  }
+  .marker_city {
+    color: #ff3a03;
+    text-align: center;
+  }
+</style>
+<% end %>
+
 <div id="map"></div>
 
 <% content_for :foot do %>
