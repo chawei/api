@@ -1,0 +1,49 @@
+/*@font-face { 
+  font-family: TradeGothic;
+  font-weight: normal;
+  font-stretch: normal;
+  src: url('../font/TradeGot.ttf'); 
+}
+
+@font-face { 
+  font-family: TradeGothic;
+  font-weight: bold;
+  src: url('../font/TradeGotBol.ttf');
+}
+
+@font-face { 
+  font-family: TradeGothicCon;
+  font-weight: bold;
+  src: url('../font/TradeGotBolConTweObl.ttf'); 
+}*/
+
+body {
+	font-family: "Simple", sans-serif;
+  font-size: 19px;
+  text-align: left;
+  background-color: #000;
+	color: #FFFFFF;
+}
+
+#container {
+  margin: auto;
+  width: 416px;
+  height: 1024px;
+}
+
+#title {
+  font-weight: bold;
+  font-style: oblique;
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+
+#desc {
+  font-size: 15px;
+  line-height: 24px;
+  color: #00FA9A;
+}
+
+#desc div {
+  margin-bottom: 30px;
+}

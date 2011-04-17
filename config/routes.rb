@@ -13,7 +13,9 @@ Api::Application.routes.draw do
   match '/exhibition' => 'exhibition#index'
   match '/map' => 'exhibition#map'
   match '/sloppy/:action' => 'sloppy'
-
+  
+  match '/statement' => 'exhibition#statement'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

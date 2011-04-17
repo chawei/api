@@ -9,8 +9,9 @@
 <body>
   <%= yield %>
 
+
   <script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-  <%= javascript_include_tag 'rails', 'sloppy' %>
+  <%= javascript_include_tag 'rails' %>
   <%= yield :foot %>
 </body>
 </html>

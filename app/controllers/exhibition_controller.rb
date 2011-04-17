@@ -6,4 +6,9 @@ class ExhibitionController < ApplicationController
   def map
     
   end
+  
+  def statement
+    
+  end
 end
+

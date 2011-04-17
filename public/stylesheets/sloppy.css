@@ -1,17 +1,86 @@
+/*@font-face { 
+  font-family: TradeGothic;
+  font-weight: normal;
+  font-stretch: normal;
+  src: url('../font/TradeGot.ttf'); 
+}
+
+@font-face { 
+  font-family: TradeGothic;
+  font-weight: bold;
+  src: url('../font/TradeGotBol.ttf');
+}
+
+@font-face { 
+  font-family: TradeGothicCon;
+  font-weight: bold;
+  src: url('../font/TradeGotBolConTweObl.ttf'); 
+}*/
+
 body {
-	font-family: 'Inconsolata', arial, serif;
-/*	font-family: 'Georgia', arial, serif;*/
+	font-family: "TradeGothic", sans-serif;
+  text-align: left;
+  background-color: #000;
+	color: #FFFFFF;
+}
 
+#container {
+  margin: auto;
+  width: 416px;
+  height: 1024px;
+  border: 1px solid #fff;
+  
+}
+
+/* 
+  Trends
+*/
+#trends {
+  font-family: Simple;
+}
+#trends a {
+  color: #fff;
+}
+#trends #detail {
+  text-align: center;
+  padding: 28px;
+}
+#trends .detail_title {
+  font-weight: bold;
+  font-style: oblique;
+}
+#trends #chart {
+  text-align: left;
+  font-size: 18px;
+  line-height: 21px;
+}
+#trends #chart #title{
+  font-weight: bold;
 }
 
 
-li {
-	margin-bottom: 5px;
+
+
+/* 
+  Review
+*/
+.review_item {
+  margin-bottom: 20px;
+  font-size: 15px;
+  position: relative;
 }
-
-a { text-decoration:none; color:#000; }
-
-.custom_link {
-	position: relative;
-}
-
+  .review_item .profile {
+  }
+  .review_item .user_name{
+    font-weight: bold;
+    position: absolute;
+    left: 60px;
+    top: 0px;
+  }
+  .review_item .text{
+    position: absolute;
+    left: 60px;
+    top: 22px;
+  }
+  .review_item .created_at{
+  }
