@@ -64,23 +64,56 @@ body {
 /* 
   Review
 */
+.article {
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+.article .profile {
+  max-width: 48px;
+  float:left;
+}
+.article .item_info {
+  float:left;
+  margin-left: 10px;
+  width: 350px;
+}
+.article .source {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.article .title {
+/*  font-family: Simple;
+  font-style: oblique;*/
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.article .content {
+  
+}
+.article .content div{
+  margin-top: 18px;
+}
+
+
+
 .review_item {
   margin-bottom: 20px;
   font-size: 15px;
-  position: relative;
 }
   .review_item .profile {
+    max-width: 48px;
+    float:left;
+  }
+  .review_item .item_info {
+    float:left; 
+    margin-left: 10px;
+    width: 350px;
   }
   .review_item .user_name{
     font-weight: bold;
-    position: absolute;
-    left: 60px;
-    top: 0px;
   }
   .review_item .text{
-    position: absolute;
-    left: 60px;
-    top: 22px;
   }
-  .review_item .created_at{
-  }
+  /*.review_item .created_at{
+      color: #999;
+    }*/
