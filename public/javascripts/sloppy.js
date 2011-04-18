@@ -1,8 +1,8 @@
 $(document).ready(function() {
-  var ARTICLE_DISPLAY_TIME = 7000;
+  var ARTICLE_DISPLAY_TIME = 10000;
   var REVIEW_DISPLAY_TIME = 2500;
   
-  var displaySection = Math.random() > 0.5 ? '#main' : '#articles';
+  var displaySection = '#main'; //Math.random() > 0.5 ? '#main' : '#articles';
   $(displaySection).fadeIn();
   
   if (displaySection == "#main") {
