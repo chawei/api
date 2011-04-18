@@ -4,6 +4,12 @@
     font-family: 'Simple';
     src: url('../font/Simple/SimplReg.ttf'); 
   }
+  
+  #map {
+    height: 1024px;
+    width: 416px;
+    border: 1px solid #fff;
+  }
 
   .layer path {
     fill: lightsteelblue;
@@ -22,7 +28,7 @@
     position: absolute; 
     display: none;
     text-align: center;
-    width: 100px;
+    width: 120px;
   }
   .marker_count {
     border: 1px solid #ff3a03;
@@ -36,17 +42,67 @@
   .marker_city {
     color: #ff3a03;
     text-align: center;
+    display: block;
+    /*text-shadow: 2px 2px 2px #000;*/
   }
+  
+  #panel {
+    position: absolute;
+    top: 400px;
+    left: 20px;
+  }
+    #panel .like_item {
+      margin: 0 0 5px 0;
+      padding: 3px 5px 1px;
+      border: 1px solid #ff3a03;
+      opacity: 0.9;
+      width: 180px;
+      color: #000;
+      background-color: #f6f6f6;
+    }
+    #panel .like_item:first-child {
+      background-color: #68ffc0;
+    }
+    #panel .like_item:nth-child(2) {
+      background-color: #cccccc;
+      opacity: 0.8;
+    }
+    #panel .like_item:nth-child(3) {
+      background-color: #cccccc;
+      opacity: 0.6;
+    }
+    #panel .like_item:nth-child(4) {
+      background-color: #cccccc;
+      opacity: 0.4;
+    }
+    #panel .like_item:nth-child(5) {
+      background-color: #cccccc;
+      opacity: 0.2;
+    }
+    #panel .like_item:nth-child(6) {
+      background-color: #cccccc;
+      opacity: 0.1;
+    }
+    #panel .like_item:nth-child(n+6) {
+      background-color: #cccccc;
+      opacity: 0.05;
+    }
+      #panel .btns_count {
+        padding: 2px 0 0 0;
+        float: right;
+      }
+      #panel .locale {
+        font-size: 12px;
+        margin-left: 5px;
+      }
 </style>
 <% end %>
 
 <div id="map"></div>
 
 <% content_for :foot do %>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
 <script type="text/javascript" src="http://github.com/simplegeo/polymaps/raw/v2.2.0/polymaps.js"></script>
 <script type="text/javascript" language="javascript" src="/javascripts/map.js"></script>
 <script type="text/javascript" language="javascript" src="<%= CDN_URL %>/fly.js"></script>
-<script type="text/javascript" charset="utf-8">
-  setTimeout(function(){highlightCities(points);}, 2000);
-</script>
 <% end %>

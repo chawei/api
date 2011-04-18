@@ -1,35 +1,3 @@
-var points = [
-{
-  "id": "la",
-  "properties": {
-    "html": "<div class='marker_count'>129</div><div class='marker_city'>Los Angeles</div>"
-  },
-  "geometry": {
-    "coordinates": [-118.159365, 34.316873],
-    "type": "Point"
-  }
-},
-{
-  "id": "sf",
-  "properties": {
-    "html": "<div class='marker_count'>129</div><div class='marker_city'>San Francisco</div>"
-  },
-  "geometry": {
-    "coordinates": [-122.259365, 37.806873],
-    "type": "Point"
-  }
-},
-{
-  "id": "ny",
-  "properties": {
-    "html": "<div class='marker_count'>129</div><div class='marker_city'>New York</div>"
-  },
-  "geometry": {
-    "coordinates": [-73.58, 40.47],
-    "type": "Point"
-  }
-}];
-
 var po = org.polymaps;
 
 var div = document.getElementById("map");
@@ -46,6 +14,28 @@ map.add(po.image()
     + "/35977/256/{Z}/{X}/{Y}.png")
     .hosts(["a.", "b.", "c.", ""])));
 
+var MAGNET_URL = 'http://magnet.detourlab.com';
+var like_items;
+var currentUrlIndex = 0;
+
+$.ajax({
+  url: MAGNET_URL+'/lang_mappings/links.json',
+  type: 'GET',
+  dataType: 'jsonp',
+  success: function(data) {
+    like_items = data;
+    
+    var panelDOM = $("<div id='panel'></div>");
+    $.each(like_items, function(index, elem){
+      panelDOM.append("<div id='"+elem.css_id+"' class='like_item'><span class='like_text'>"+
+                       elem.like_text+"</span>"+
+                       "<span class='locale'>"+elem.locale+"</span>"+
+                       "<span class='btns_count'>"+elem.btns_count+"</span>"+"</div>");
+    });
+    $('#map').append(panelDOM);
+    runMapAnimation(like_items[currentUrlIndex]);
+  }
+});
 /*
  * Load the "AerialWithLabels" metadata. "Aerial" and "Road" also work. For more
  * information about the Imagery Metadata service, see
@@ -168,9 +158,13 @@ function findBounds(points) {
     lats.push(points[i].geometry.coordinates[1]);
   }
   
-  lons.sort();
-  lats.sort();
+  lons.sort(compare);
+  lats.sort(compare);
   return [lats[0], lons[0], lats[len-1], lons[len-1]]; // s, w, n, e
+}
+
+function compare(a,b){
+  return a-b;
 }
 
 function moveToBounds(s, w, n, e) {
@@ -189,26 +183,55 @@ function moveToBounds(s, w, n, e) {
 }
 
 function adjustToProperBounds(s, w, n, e) {
-  var bufferPercentage = 20;
+  var bufferPercentage = 10;
   delta_y = (n - s)*(bufferPercentage/100);
   delta_x = (e - w)*(bufferPercentage/100);
   return [s-delta_y, w-delta_x, n+delta_y, e+delta_x];
 }
 
-function highlightCities(cities) {        
-  var bounds = findBounds(cities);
+function runMapAnimation(item) {
+  markers = []; // reset markers
+  
+  $.ajax({
+    url: item.url,
+    type: 'GET',
+    dataType: 'jsonp',
+    success: function(data) {
+      setTimeout(function(){highlightCities(data.points);}, 2000);
+    }
+  });
+}
+
+function highlightCities(cities) {
+  if (cities.length > 1) {    
+    var bounds = findBounds(cities);
+  } else {
+    lon = cities[0].geometry.coordinates[0];
+    lat = cities[0].geometry.coordinates[1];
+    var bounds = [lat-3, lon-3, lat+3, lon+3];
+  }
   var adjustedBound = adjustToProperBounds(bounds[0], bounds[1], bounds[2], bounds[3]);
   moveToBounds(adjustedBound[0], adjustedBound[1], adjustedBound[2], adjustedBound[3]);
   
   loadInterval = setInterval(function() {
     if (interval==0) {
       setTimeout(function(){
-        console.log(interval);
+        console.log('zoomed');
         map.add(po.geoJson()
            .on("load", load)
            .features(cities));
-
-        var looper = new Looper(markers);
+           
+        var looper = new Looper(markers, false, function() {
+          $.each(markers, function(index, elem) {
+            elem.fadeOut();
+          });
+          
+          $('#'+like_items[currentUrlIndex].css_id).slideUp(function(){$(this).remove()});
+          currentUrlIndex+=1;
+          if (currentUrlIndex < like_items.length) {
+            runMapAnimation(like_items[currentUrlIndex]);
+          }
+        });
         looper.start();
       }, 800);
       clearInterval(loadInterval);
@@ -217,6 +240,8 @@ function highlightCities(cities) {
 }
 
 function load(e) {
+  console.log(markers);
+  markers = [];
   for (var i = 0; i < e.features.length; i++) {
     console.log(e.features.length);
     var feature = e.features[i];
@@ -231,13 +256,14 @@ function load(e) {
   }
 }
 
-function Looper(items, loop) {
+function Looper(items, loop, callback, delay) {
   var _items = items || [];
   var _nextItem = null;
   var _timeouts = [];
   var _nextIndex = null;
   var _currentIndex = null;
   var _loop = false || loop;
+  var _delay = 3000 || delay;
 
   function clearTimeouts() {
     for (var name in _timeouts) {
@@ -261,7 +287,8 @@ function Looper(items, loop) {
       if (_loop) {
         _nextIndex = 0;
       } else {
-        clearTimeouts(); 
+        clearTimeouts();
+        if (callback != undefined) { setTimeout(function() {callback();}, _delay); }
         return;
       }
     }
