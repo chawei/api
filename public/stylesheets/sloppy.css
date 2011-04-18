@@ -38,6 +38,8 @@
   src: url('../font/TradeGotBolConTweObl.ttf'); 
 }
 
+html{ overflow: hidden; }
+
 body {
 	font-family: "TradeGothic", sans-serif;
   text-align: left;
