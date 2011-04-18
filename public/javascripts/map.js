@@ -17,9 +17,16 @@ map.add(po.image()
 var MAGNET_URL = 'http://magnet.detourlab.com';
 var like_items;
 var currentUrlIndex = 0;
+var request_path = null;
+
+if ($.url.param("latest")) {
+  request_path = '/disabling_logs/latest_logs.json';
+} else {
+  request_path = '/lang_mappings/links.json';
+}
 
 $.ajax({
-  url: MAGNET_URL+'/lang_mappings/links.json',
+  url: MAGNET_URL+request_path,
   type: 'GET',
   dataType: 'jsonp',
   success: function(data) {

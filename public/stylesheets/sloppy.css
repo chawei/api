@@ -139,3 +139,18 @@ body {
   /*.review_item .created_at{
       color: #999;
     }*/
+
+.review_item:nth-child(-n+5), .review_item:nth-child(n+7) {
+  opacity: 0.7;
+}
+.review_item:nth-child(-n+4), .review_item:nth-child(n+8) {
+  opacity: 0.5;
+}
+.review_item:nth-child(-n+2), .review_item:nth-child(n+11) {
+  opacity: 0.3;
+}
+
+
+.hidden {
+  display: none;
+}
