@@ -28,35 +28,42 @@
     position: absolute; 
     display: none;
     text-align: center;
-    width: 120px;
+    width: 40px;
+		font-size: 11px;
   }
   .marker_count {
     border: 1px solid #ff3a03;
     color: #ff3a03;
     background-color: #68ffc0;
-    padding: 5px 10px;
-    margin: 0 auto 10px;
+    padding: 5px 2px 2px 2px;
+    margin: 0 auto 3px;
     text-align: center;
     display: inline-block;
+		font-size: 10px;
+		font-weight: bold;
   }
   .marker_city {
     color: #ff3a03;
     text-align: center;
-    display: block;
+    display: inline-block;
+		padding: 3px 3px 0 3px;
+		background-color: rgba(255,255,255,1);
     /*text-shadow: 2px 2px 2px #000;*/
   }
   
   #panel {
+		font-size: 15px;
     position: absolute;
-    top: 400px;
+    top: 600px;
     left: 20px;
+		line-height: 17px;
   }
     #panel .like_item {
       margin: 0 0 5px 0;
       padding: 3px 5px 1px;
       border: 1px solid #ff3a03;
       opacity: 0.9;
-      width: 180px;
+      width: 130px;
       color: #000;
       background-color: #f6f6f6;
     }
@@ -87,12 +94,17 @@
       background-color: #cccccc;
       opacity: 0.05;
     }
+			#panel .like_text {
+				margin: 4px 0 0 0;
+			}
+			
       #panel .btns_count {
         padding: 2px 0 0 0;
         float: right;
+				font-size: 11px;
       }
       #panel .locale {
-        font-size: 12px;
+        font-size: 9px;
         margin-left: 5px;
       }
 </style>

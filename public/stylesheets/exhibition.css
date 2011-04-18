@@ -1,21 +1,45 @@
-/*@font-face { 
-  font-family: TradeGothic;
+@font-face { 
+  font-family: 'Simple';
+  font-weight: normal;
+  src: url('../font/Simple/SimplReg.ttf'); 
+}
+@font-face { 
+  font-family: 'Simple';
+  font-weight: bold;
+  src: url('../font/Simple/SimplBol.ttf'); 
+}
+@font-face { 
+  font-family: 'Simple';
+  font-style: oblique;
+  font-weight: bold;
+  src: url('../font/Simple/SimplBolObl.ttf'); 
+}
+@font-face { 
+  font-family: 'Simple';
+  font-style: oblique;
+  font-weight: normal;
+  src: url('../font/Simple/SimplObl.ttf'); 
+}
+
+
+@font-face { 
+  font-family: 'TradeGothic';
   font-weight: normal;
   font-stretch: normal;
   src: url('../font/TradeGot.ttf'); 
 }
 
 @font-face { 
-  font-family: TradeGothic;
+  font-family: 'TradeGothic';
   font-weight: bold;
   src: url('../font/TradeGotBol.ttf');
 }
 
 @font-face { 
-  font-family: TradeGothicCon;
+  font-family: 'TradeGothicCon';
   font-weight: bold;
   src: url('../font/TradeGotBolConTweObl.ttf'); 
-}*/
+}
 
 body {
 	font-family: "Simple", sans-serif;
@@ -27,14 +51,16 @@ body {
 
 #container {
   margin: auto;
+  padding:40px 10px 40px 10px;
   width: 416px;
   height: 1024px;
+  border:1px solid #fff;
 }
 
 #title {
   font-weight: bold;
   font-style: oblique;
-  font-size: 30px;
+  font-size: 23px;
   margin-bottom: 30px;
 }
 
@@ -47,3 +73,4 @@ body {
 #desc div {
   margin-bottom: 30px;
 }
+

@@ -197,7 +197,7 @@ function runMapAnimation(item) {
     type: 'GET',
     dataType: 'jsonp',
     success: function(data) {
-      setTimeout(function(){highlightCities(data.points);}, 2000);
+      setTimeout(function(){highlightCities(data.points);}, 1500);
     }
   });
 }
@@ -216,7 +216,7 @@ function highlightCities(cities) {
   loadInterval = setInterval(function() {
     if (interval==0) {
       setTimeout(function(){
-        console.log('zoomed');
+        //console.log('zoomed');
         map.add(po.geoJson()
            .on("load", load)
            .features(cities));
@@ -249,7 +249,7 @@ function load(e) {
     
     loc = map.locationPoint({ lat: feature.data.geometry.coordinates[1], lon: feature.data.geometry.coordinates[0] });
     var marker = $("<div class='marker'></div>");
-    marker.css('top', (loc.y-50)+'px').css('left', (loc.x-50)+'px').html(feature.data.properties.html);
+    marker.css('top', (loc.y)+'px').css('left', (loc.x)+'px').html(feature.data.properties.html);
     
     $('#map').append(marker);
     markers.push(marker);
