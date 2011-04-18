@@ -256,7 +256,7 @@ function load(e) {
     
     loc = map.locationPoint({ lat: feature.data.geometry.coordinates[1], lon: feature.data.geometry.coordinates[0] });
     var marker = $("<div class='marker'></div>");
-    marker.css('top', (loc.y)+'px').css('left', (loc.x)+'px').html(feature.data.properties.html);
+    marker.css('top', (loc.y-20)+'px').css('left', (loc.x-20)+'px').html(feature.data.properties.html);
     
     $('#map').append(marker);
     markers.push(marker);
