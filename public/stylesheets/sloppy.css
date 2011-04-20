@@ -52,6 +52,7 @@ body {
   margin: auto;
   width: 416px;
   height: 1024px;
+  position: relative;
   /*border: 1px solid #fff;*/
 }
 
@@ -155,3 +156,14 @@ body {
 .hidden {
   display: none;
 }
+
+#nav_arrow {
+  width: 20px;
+  display: block;
+  position: absolute;
+  top: 200px;
+  right: -5px;
+}
+  #nav_arrow img {
+    width: 20px;
+  }
