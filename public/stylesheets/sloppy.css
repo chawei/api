@@ -161,9 +161,13 @@ body {
   width: 20px;
   display: block;
   position: absolute;
-  top: 200px;
-  right: -5px;
+  top: 275px;
+  right: -25px;
 }
   #nav_arrow img {
     width: 20px;
   }
+  
+#trends #nav_arrow {
+  top: 295px;
+}
