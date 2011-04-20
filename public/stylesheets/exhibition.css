@@ -65,7 +65,7 @@ body {
   font-weight: bold;
   font-style: oblique;
   font-size: 23px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 #desc {
@@ -75,6 +75,6 @@ body {
 }
 
 #desc div {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
