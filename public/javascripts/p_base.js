@@ -199,12 +199,14 @@ function WGHyperLink(elem) {
   }
 	function sketchProc(processing) {
     processing.setup = function() {
+      /*
 			processing.background(255);
 			processing.smooth();
   		processing.frameRate(7);
 			processing.stroke(33);
 			processing.strokeWeight(1);
 			processing.drawFreehandLine(5,5,width,5);
+			*/
     }
     processing.draw = function() {
 			if(ele[0].isMouseEnter) {

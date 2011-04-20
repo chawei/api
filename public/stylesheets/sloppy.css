@@ -61,6 +61,7 @@ body {
 */
 #trends {
   font-family: Simple;
+  padding-top: 50px;
 }
 #trends a {
   color: #fff;
@@ -161,8 +162,8 @@ body {
   width: 20px;
   display: block;
   position: absolute;
-  top: 275px;
-  right: -25px;
+  top: 270px;
+  right: -23px;
 }
   #nav_arrow img {
     width: 20px;
