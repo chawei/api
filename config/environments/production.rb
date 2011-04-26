@@ -46,4 +46,7 @@ Api::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+  
+  SEARCH_SITE = "detourlab.com"
+  CDN_URL = "https://github.com/detour/js/raw/master"
 end

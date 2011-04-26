@@ -82,7 +82,7 @@ namespace :deploy do
   task :before_symlink do
     #run "rm #{release_path}/public/.htaccess" #not compatible with Passenger
     run "ln -s #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-    run "ln -s #{shared_path}/config/environment.rb #{release_path}/config/environment.rb"
+    run "ln -s #{shared_path}/config/api_keys.yml #{release_path}/config/api_keys.yml"
   end
 
     # Restart passenger on deploy
