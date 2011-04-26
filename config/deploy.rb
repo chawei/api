@@ -75,6 +75,7 @@ namespace :deploy do
   
   desc "Symlink db"
   task :before_migrate do
+    run "ln -s #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     run "ln -s #{shared_path}/config/api_keys.yml #{release_path}/config/api_keys.yml"
   end
   
