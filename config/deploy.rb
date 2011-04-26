@@ -75,14 +75,12 @@ namespace :deploy do
   
   desc "Symlink db"
   task :before_migrate do
-    #run "ln -s #{shared_path}/db/production.sqlite3 #{release_path}/db/production.sqlite3"
+    run "ln -s #{shared_path}/config/api_keys.yml #{release_path}/config/api_keys.yml"
   end
   
-  desc "Symlink config files and db"
+  desc "Symlink config files"
   task :before_symlink do
     #run "rm #{release_path}/public/.htaccess" #not compatible with Passenger
-    run "ln -s #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-    run "ln -s #{shared_path}/config/api_keys.yml #{release_path}/config/api_keys.yml"
   end
 
     # Restart passenger on deploy
