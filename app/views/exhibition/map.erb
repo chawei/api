@@ -1,114 +1,16 @@
 <% content_for :head do %>
+<% if params[:mode] == "projection" %>
 <style type="text/css" media="screen">
-  @font-face { 
-    font-family: 'Simple';
-    src: url('../font/Simple/SimplReg.ttf'); 
-  }
-  
   #map {
     height: 1024px;
     width: 416px;
-    margin: auto;
-    position: relative;
-  }
-
-  .layer path {
-    fill: lightsteelblue;
-    fill-opacity: .5;
-    stroke: steelblue;
-  }
-
-  .layer circle {
-    fill: lightcoral;
-    fill-opacity: .0;
-    /*stroke: brown;*/
-  }
-  
-  .marker {
-    font-family: 'Simple';
-    position: absolute; 
-    display: none;
-    text-align: center;
-    width: 40px;
-		font-size: 11px;
-  }
-  .marker_count {
-    border: 1px solid #ff3a03;
-    color: #ff3a03;
-    background-color: #68ffc0;
-    padding: 5px 2px 2px 2px;
-    margin: 0 auto 3px;
-    text-align: center;
-    display: inline-block;
-		font-size: 10px;
-		font-weight: bold;
-  }
-  .marker_city {
-    color: #ff3a03;
-    text-align: center;
-    display: inline-block;
-		padding: 3px 3px 0 3px;
-		background-color: rgba(255,255,255,1);
-    /*text-shadow: 2px 2px 2px #000;*/
   }
   
   #panel {
-		font-size: 15px;
-    position: absolute;
     top: 600px;
-    left: 20px;
-		line-height: 17px;
   }
-    #panel .like_item {
-      margin: 0 0 5px 0;
-      padding: 3px 5px 1px;
-      border: 1px solid #ff3a03;
-      opacity: 0.9;
-      width: 130px;
-      color: #000;
-      background-color: #f6f6f6;
-    }
-    #panel .like_item:first-child {
-      background-color: #68ffc0;
-    }
-    #panel .like_item:nth-child(2) {
-      background-color: #cccccc;
-      opacity: 0.8;
-    }
-    #panel .like_item:nth-child(3) {
-      background-color: #cccccc;
-      opacity: 0.6;
-    }
-    #panel .like_item:nth-child(4) {
-      background-color: #cccccc;
-      opacity: 0.4;
-    }
-    #panel .like_item:nth-child(5) {
-      background-color: #cccccc;
-      opacity: 0.2;
-    }
-    #panel .like_item:nth-child(6) {
-      background-color: #cccccc;
-      opacity: 0.1;
-    }
-    #panel .like_item:nth-child(n+6) {
-      background-color: #cccccc;
-      opacity: 0.05;
-    }
-			#panel .like_text {
-				margin: 4px 0 0 0;
-			}
-			
-      #panel .btns_count {
-        padding: 2px 0 0 0;
-        float: right;
-				font-size: 11px;
-      }
-      #panel .locale {
-        font-size: 9px;
-        margin-left: 5px;
-      }
 </style>
+<% end %>
 <% end %>
 
 <div id="map"></div>

@@ -31,7 +31,7 @@ class GLanguageDetector
     retried_counter = 0
     max_retried_time = 3
     
-    api_key = API_KEYS[(rand()*10).round() % API_KEYS.length]
+    api_key = API_KEYS[:google_api_token]
     begin
       url = "https://www.googleapis.com/language/translate/v2?key=#{api_key}&target=en&q=#{URI.escape(text)}"
       response = self.get(url)
